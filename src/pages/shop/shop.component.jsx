@@ -1,22 +1,11 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import CollectionsOverview from '../../components/collections-overview/collections-overview.component'
-import CollectionPage from '../collection/collection.component'
+import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container'
+import CollectionContainer from '../collection/collection.container'
 
 import { connect } from 'react-redux'
 import { fetchCollectionsAsync } from '../../redux/shop/shop.actions'
-
-import { createStructuredSelector } from 'reselect'
-import {
-  selectIsFetchingCollection,
-  selectCollectionIsLoaded,
-} from '../../redux/shop/shop.selectors'
-
-import WithSpinner from '../../components/with-spinner/with-spinner.components'
-
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview)
-const CollectionPageWithSpinner = WithSpinner(CollectionPage)
 
 class ShopPage extends React.Component {
   componentDidMount() {
@@ -24,20 +13,14 @@ class ShopPage extends React.Component {
     fetchCollectionsAsync()
   }
   render() {
-    const { match, isFetching, isLoaded } = this.props
+    const { match } = this.props
     return (
       <Switch>
-        <Route
-          exact
-          path={`${match.path}`}
-          render={props => (
-            <CollectionsOverviewWithSpinner isLoading={isFetching} {...props} />
-          )}
-        />
+        <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
         <Route
           exact
           path={`${match.path}/:collectionId`}
-          render={props => <CollectionPageWithSpinner isLoading={!isLoaded} {...props} />}
+          component={CollectionContainer}
         />
       </Switch>
     )
@@ -48,12 +31,7 @@ const mapDispatchToProps = dispatch => ({
   fetchCollectionsAsync: () => dispatch(fetchCollectionsAsync()),
 })
 
-const mapStateToProps = createStructuredSelector({
-  isFetching: selectIsFetchingCollection,
-  isLoaded: selectCollectionIsLoaded,
-})
-
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(ShopPage)
