@@ -5,7 +5,10 @@ import { SignInContainer, TitleStyled, ButtonsContainer } from './sign-in.styles
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { googleSignInStart } from '../../redux/user/user.actions';
+import {
+  googleSignInStart,
+  userAndPasswordSignInStart,
+} from '../../redux/user/user.actions';
 import { connect } from 'react-redux';
 class SignIn extends React.Component {
   constructor(props) {
@@ -26,16 +29,9 @@ class SignIn extends React.Component {
     event.preventDefault();
 
     const { email, password } = this.state;
+    const { userAndPasswordSignInStart } = this.props;
 
-    try {
-      //await auth.signInWithEmailAndPassword(email, password);
-      this.setState({
-        email: '',
-        password: '',
-      });
-    } catch (error) {
-      console.error(error.message);
-    }
+    userAndPasswordSignInStart({ email, password });
   };
 
   render() {
@@ -75,6 +71,7 @@ class SignIn extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   googleSignInStart: () => dispatch(googleSignInStart()),
+  userAndPasswordSignInStart: userAuth => dispatch(userAndPasswordSignInStart(userAuth)),
 });
 
 export default connect(
