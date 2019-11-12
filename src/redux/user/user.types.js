@@ -7,6 +7,8 @@ const UserActionsType = {
   SIGN_IN_FAILURE: 'SIGN_IN_FAILURE',
   SIGN_OUT_SUCCESS: 'SIGN_OUT_SUCCESS',
   SIGN_OUT_FAILURE: 'SIGN_OUT_FAILURE',
-};
+  SIGN_UP_START: 'SIGN_UP_START',
+  SIGN_UP_FAILURE: 'SIGN_UP_FAILURE',
+}
 
-export default UserActionsType;
+export default UserActionsType
